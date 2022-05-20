@@ -26,7 +26,7 @@ module.exports.func = {
         User.findById(id, res);
     },
 
-    getUserByUsername: function (id, res) {
+    getUserByUsername: function (username, res) {
         const query = {username: username}
         User.findOne(query, res)
     },
@@ -43,6 +43,14 @@ module.exports.func = {
                 newUser.save(cb);
             });
         });
+    },
+
+    compareUserPassword: function (typedPassword, passwordHash , cb){
+       bcrypt.compare(typedPassword, passwordHash, (err, res) =>{
+           if(err) throw err;
+           //what is this null for? Would work with just response
+           cb(null, res);
+       });
     }
 
 };

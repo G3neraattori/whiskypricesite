@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const mongo_config = require('./configs/dbconfig')
 const users = require('./routes/users')
 const passport = require('passport')
+const session = require('express-session')
 
 
 const app = express();
@@ -18,14 +19,23 @@ mongoose.connection.on('connected', () =>{
 });
 
 //TODO what is this?
+app.use(session({
+    secret: "TEMPORARY",
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session())
+
+
 require('./configs/passportconfig')(passport)
+
 
 app.use(express.static(path.join(__dirname, 'client')))
 app.use(bodyParser.json())
 app.use('/users', users)
+
 
 app.get('/', (req, res) =>{
     res.send("Invalid endpoint")
