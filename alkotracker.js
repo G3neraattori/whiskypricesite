@@ -29,7 +29,6 @@ const getFile = async() =>{
 }
 
 
-
 function parseXlsxToDB() {
     const file = xlsx.readFile('./client/temp/data.xlsx');
     const worksheet = file.Sheets[file.SheetNames[0]];

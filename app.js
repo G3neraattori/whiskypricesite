@@ -25,6 +25,7 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(cors());
+
 app.use(passport.initialize());
 app.use(passport.session())
 

@@ -18,7 +18,7 @@ const DateSchema = mongoose.Schema({
         required: true,
     },
     products:[{ type: mongoose.Schema.Types.ObjectId, ref: 'History' }]
-});
+})
 
 
 

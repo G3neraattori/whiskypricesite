@@ -13,7 +13,7 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
     });
-
+    console.log(newUser)
     User.func.addUser(newUser, (err, user) =>{
 
         if(err) {
