@@ -1,0 +1,16 @@
+.form-signin{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+.form-signin label{
+  padding-top: 50px;
+}
+.form-signin h1{
+  padding-top: 50px;
+  font-size: 35px;
+}
+.btn-lg{
+  outline-width: 50px;
+}

@@ -1,0 +1,29 @@
+.display-3{
+  padding-top: 20px;
+
+
+}
+.home-description{
+  padding: 20px 20px 250px;
+  font-size: 20px;
+
+}
+.homepage-row{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+.background{
+  background-image: url("../../../homepage_2.png"); /*Author: https://www.instagram.com/matiastoropainen/, used with copyright owners permission*/
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 50vh;
+  width: 100%;
+}
+.blur{
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  height: 50vh;
+  width: 100%;
+}
