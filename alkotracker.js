@@ -3,6 +3,7 @@ const https = require('https');
 const fs = require('fs');
 const xlsx = require('xlsx');
 const Datedata = require("./models/history");
+const History = require('./models/historysubschema')
 const mongoose = require('mongoose')
 const cfg = require('./configs/alkodbconfig')
 const date = new Date();
@@ -31,31 +32,55 @@ const getFile = async() =>{
 
 function parseXlsxToDB() {
     const file = xlsx.readFile('./client/temp/data.xlsx');
-    let parsedData = [];
     const worksheet = file.Sheets[file.SheetNames[0]];
+    /*let datedata = new Datedata({
+        date: date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear(),
+        products:[History]
 
-    let datedata = new Datedata({
-        date: date.getDate(),
-        products:[]
+    })*/
+    const datedata = new Datedata();
+    datedata.date = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear()
+    datedata.save()
+        .then((result) => {
+            console.log("ok")
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
-    })
     for (let z in worksheet) {
-
         if(z.toString()[0] === 'I' && worksheet[z].v.toString() === ('viskit')){
             let productTypeS = worksheet[z].v
             z = z.substring(1);
-            let product = {
+            /*let history = new History({
                 productName: worksheet['B' + z].v,
                 price: worksheet['E' + z].v,
                 pricePerLiter: worksheet['F' + z].v,
                 productType: productTypeS
 
-            }
-            datedata.products.push(product);
+            })*/
+            const history = new History();
+            history.productName = worksheet['B' + z].v
+            history.price = worksheet['E' + z].v
+            history.pricePerLiter = worksheet['F' + z].v
+            history.productType = productTypeS
+            history.save()
+                .then((result) => {
+                    Datedata.findOne({ date: date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() }, (err, datedata) => {
+                        if (datedata) {
+                            datedata.products.push(history);
+                            datedata.save();
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            //datedata.products.push(history);
         }
     }
-    datedata.save()
-    console.log(datedata)
+    //datedata.save()
+    //console.log(datedata)
 }
 
 parseXlsxToDB()
