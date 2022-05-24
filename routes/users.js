@@ -31,9 +31,10 @@ router.post('/authenticate', (req, res, next) => {
 
     User.func.getUserByUsername(username, (err, user) =>{
         if(err) throw err;
-
+        console.log(!user)
         if(!user){
             res.json({success: false, msg: 'User not found.'})
+            return;
         }
 
         User.func.compareUserPassword(password, user.password, (err, result) =>{
@@ -48,9 +49,9 @@ router.post('/authenticate', (req, res, next) => {
                 res.json({
                     //Info the result
                     success: true,
-                    msg: 'Login successfull',
+                    msg: 'Login successful',
                     //return the token. Significant whitespace after JWT!
-                    token: 'JWT ' + token,
+                    token: token,
                     //return the userdata to the client
                     user: {
                         id: user._id,
@@ -62,14 +63,14 @@ router.post('/authenticate', (req, res, next) => {
         })
     });
 });
-
+//passport.authenticate('jwt', {session: false})
 
 
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    res.send('stuff')
+    console.log(req)
+    res.json({user: req.user});
 });
 
-//
 
 
 

@@ -5,6 +5,7 @@ const e = require("express");
 
 const HistorySchema = new mongoose.Schema({
     productName: String,
+    bottleSize: String,
     price: String,
     pricePerLiter: String,
     productType: String
@@ -24,3 +25,4 @@ module.exports.addUser = function (newUser, cb) {
     newUser.save(cb);
 
 }
+

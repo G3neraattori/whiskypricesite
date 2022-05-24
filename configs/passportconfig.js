@@ -4,7 +4,7 @@ const config = require('../configs/dbconfig')
 
 module.exports = function (passport){
     let opts = {}
-    opts.jwtFromRequest = jwt.ExtractJwt.fromAuthHeaderWithScheme("jwt");
+    opts.jwtFromRequest = jwt.ExtractJwt.fromAuthHeaderAsBearerToken()
     opts.secretOrKey = config.secret
     passport.use(new jwt.Strategy(opts, (jwt_payload, done) => {
         console.log(jwt_payload)

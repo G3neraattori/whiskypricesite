@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const config = require('../configs/alkodbconfig')
 const e = require("express");
 const {History} = require(__dirname +'/historysubschema.js')
+const cfg = require("../configs/alkodbconfig");
 
 /*const HistorySchema = mongoose.Schema({
     productName: String,
@@ -10,6 +11,7 @@ const {History} = require(__dirname +'/historysubschema.js')
     productType: String
 
 });*/
+
 
 const DateSchema = mongoose.Schema({
     date:{
@@ -31,3 +33,17 @@ module.exports.addUser = function (newUser, cb) {
     newUser.save(cb);
 
 }
+
+module.exports.normalSearch = function (res) {
+
+    const test1 = History.find({productName: "Jameson"})
+    test1.select('productName bottleSize pricePerLiter');
+
+    test1.exec(function (err, data) {
+        if (err) throw (err);
+        return data;
+    });
+
+
+}
+
