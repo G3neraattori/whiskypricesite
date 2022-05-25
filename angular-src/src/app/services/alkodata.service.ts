@@ -11,13 +11,36 @@ export class AlkodataService {
 
               ) { }
 
-  getData(){
+  getData(search: any){
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
     });
-    return this.http.get('http://localhost:3000/data/products', {
+    return this.http.post('http://localhost:3000/data/products', search, {
       headers: headers,
       observe: 'response'
     }).pipe(map((res: HttpResponse<Object>) => res));
   }
+
+  getLabels(){
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    return this.http.get('http://localhost:3000/data/allproducts', {
+      headers: headers,
+      observe: 'response'
+    }).pipe(map((res: HttpResponse<Object>) => res));
+  }
+
+  getSizes(pname: string, pdata: any){
+    let arr: any[] = [];
+
+    for(let i=0; i<pdata[0].products.length; i++){
+      if(!arr.includes(pdata[0].products[i].bottleSize) && pdata[0].products[i].productName === pname){
+        arr.push(pdata[0].products[i].bottleSize);
+      }
+    }
+
+    return arr;
+  }
+
 }

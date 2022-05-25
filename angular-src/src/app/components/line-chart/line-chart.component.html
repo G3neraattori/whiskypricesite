@@ -1,13 +1,101 @@
-<div style="display: block;">
-  <canvas baseChart width="400" height="400"
-          [type]="'line'"
-          [data]="lineChartData"
-          [options]="lineChartOptions"
-          [legend]="lineChartLegend"
-          [plugins]="lineChartPlugins">
-  </canvas>
-  <li class="button">
-    <a class="button" aria-current="page" (click)="pressMe()">Log</a>
-  </li>
-</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+
+  <title>Linechart</title>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+</head>
+  <body class="text-center">
+    <div id="wrapper">
+      <div id="div1" >
+        <canvas #baseChart baseChart id="chart"
+                [type]="'line'"
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [legend]="lineChartLegend"
+                [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+
+      <!--style="display: block;"-->
+      <div id="div2">
+        <form class="form-search" (submit)="pressMe()">
+          <!--img class="mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
+          <h1 class="h3 mb-3 font-weight-normal">Search Options</h1>
+          <input type="search" id="inputProduct" class="form-control" placeholder="Product Name" [(ngModel)]="product" name="product" list="plist" (click)="onProducts()" required autofocus>
+          <datalist id="plist">
+            <option *ngFor="let p of productlist" [ngValue]="p">
+              {{ p }}
+            </option>
+          </datalist>
+          <input type="text" id="inputSize" class="form-control" placeholder="Container Size" [(ngModel)]="pSize" name="pSize" list="slist" (click)="onSizes()" onfocus="this.s=''" onchange="this.blur();" autocomplete="off" required>
+          <datalist id="slist">
+            <option *ngFor="let s of sizelist" [ngValue]="s">
+              {{ s }}
+            </option>
+          </datalist>
+
+
+
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me" [(ngModel)]="ppl" name="ppl"> Price per liter
+            </label>
+          </div>
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+
+      </div>
+    </div>
+    <div id="moredata">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Price</th>
+          <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr class="table-primary">
+            <th scope="row">Lowest Price</th>
+            <td>Price</td>
+            <td>date</td>
+          </tr>
+          <tr class="table-secondary">
+            <th scope="row">Highest Price</th>
+            <td>Column content</td>
+            <td>Column content</td>
+          </tr>
+          <tr class="table-primary">
+            <th scope="row">Average Price</th>
+            <td>Column content</td>
+            <td>Column content</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
 
