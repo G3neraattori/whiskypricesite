@@ -14,7 +14,7 @@ A course project for LUT fullstack course.
 This is a site for checking the price and history of whiskies available in the alko site. The code could be somewhat easily be updated to include other products too or additional sites.
 
 <br>
-Functionality it includes is:
+Functionality included:
 <ul>
     <li>databasing functionality for storing userdata and the Alko product prices (as they don't keep their price history available)</li>
     <li>automated data collection from an API</li>
