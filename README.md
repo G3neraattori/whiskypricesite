@@ -32,7 +32,7 @@ Functionality it includes is:
 
 1. Clone the git repo to your local machine
   ```
-https://github.com/G3neraattori/whiskypricesite.git
+git clone https://github.com/G3neraattori/whiskypricesite.git
   ```
 *(or use cli)*
 2. Navigate to the project root and run
