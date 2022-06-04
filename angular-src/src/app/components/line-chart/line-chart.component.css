@@ -26,5 +26,12 @@
   float: bottom;
   margin-bottom: 10px;
 }
+#saveButton{
+  float: bottom;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  width: 185px
+}
+
 
 

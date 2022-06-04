@@ -66,6 +66,7 @@
           <button class="btn btn-outline-primary" type="submit">Search</button>
         </form>
 
+        <button class="btn btn-outline-info" *ngIf="product&&pSize" (click)="onSave()" id="saveButton">Save</button>
       </div>
     </div>
     <div id="moredata">
@@ -80,18 +81,18 @@
         <tbody>
           <tr class="table-primary">
             <th scope="row">Lowest Price</th>
-            <td>Price</td>
-            <td>date</td>
+            <td>{{min}}€</td>
+            <td>{{minDate}}</td>
           </tr>
           <tr class="table-secondary">
             <th scope="row">Highest Price</th>
-            <td>Column content</td>
-            <td>Column content</td>
+            <td>{{max}}€</td>
+            <td>{{maxDate}}</td>
           </tr>
           <tr class="table-primary">
             <th scope="row">Average Price</th>
-            <td>Column content</td>
-            <td>Column content</td>
+            <td>{{avg}}€</td>
+            <td></td>
           </tr>
         </tbody>
       </table>

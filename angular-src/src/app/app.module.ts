@@ -19,6 +19,9 @@ import {LoginComponent} from "./components/login/login.component";
 import { ProfileComponent } from './components/profile/profile.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { SearchComponent } from './components/search/search.component';
+import { ChartDrawerComponent } from './components/chart-drawer/chart-drawer.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     LoginComponent,
     ProfileComponent,
     DashboardComponent,
-    LineChartComponent
+    LineChartComponent,
+    SearchComponent,
+    ChartDrawerComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@
     <div class="container">
       <div class="background">
         <div class="blur">
-          <h1 class="display-3">Price History</h1>
+          <h1 class="display-3">Whisky Price History</h1>
           <p class="home-description">This a landing page for for LUT fullstack course project. </p>
         </div>
       </div>
@@ -14,7 +14,7 @@
 
   <div class="container">
     <div class="homepage-row">
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="authService.loggedIn()">
         <h2>Register</h2>
         <p>Click here to get to the register page</p>
         <p><a class="btn btn-outline-primary" [routerLink]="['/register']" role="button">Register &raquo;</a></p>
@@ -24,14 +24,26 @@
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
         <p><a class="btn btn-outline-primary" href="#" role="button">View details &raquo;</a></p>
       </div>-->
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="authService.loggedIn()">
         <h2>Login</h2>
         <p>Already a user? Click here to sign in.</p>
         <p><a class="btn btn-outline-primary" [routerLink]="['/login']" role="button">Sign in &raquo;</a></p>
       </div>
+
+      <div class="col-md-4" *ngIf="!authService.loggedIn()">
+        <h2>Search</h2>
+        <p>Search for new interesting whiskies to track the price changes</p>
+        <p><a class="btn btn-outline-primary" [routerLink]="['/search']" role="button">Search &raquo;</a></p>
+      </div>
+      <div class="col-md-4" *ngIf="!authService.loggedIn()">
+        <h2>Dashboard</h2>
+        <p>See all your saved whiskies, profile and more on your personal dashboard</p>
+        <p><a class="btn btn-outline-primary" [routerLink]="['/dashboard']" role="button">Dashboard &raquo;</a></p>
+      </div>
     </div>
 
-    <hr>
+
+
 
   </div> <!-- /container -->
 

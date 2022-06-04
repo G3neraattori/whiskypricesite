@@ -14,7 +14,9 @@ const UserSchema = mongoose.Schema({
        required: true,
     },
 
-    email: {type: String}
+    email: {type: String},
+
+    saved: []
 });
 
 
@@ -51,7 +53,25 @@ module.exports.func = {
            //what is this null for? Would work with just response
            cb(null, res);
        });
-    }
+    },
 
+    saveToUser: function (username, givenPname , givenPsize, cb){
+        let save = { pname: givenPname, psize: givenPsize }
+
+        User.updateOne(
+            {username: username},
+            {$addToSet: {saved: save}},
+            cb,function(err) { console.log(err) });
+
+    },
+
+    removeFromUser: function (username, givenPname , givenPsize, cb){
+        let save = { pname: givenPname, psize: givenPsize}
+
+        User.updateOne(
+            {username: username},
+            {$pull: {saved: save}},
+            cb,function(err) { console.log(err) });
+    }
 };
 

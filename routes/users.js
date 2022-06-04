@@ -65,11 +65,36 @@ router.post('/authenticate', (req, res, next) => {
 });
 //passport.authenticate('jwt', {session: false})
 
-
+//TODO NOT THIS
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     console.log(req)
     res.json({user: req.user});
 });
+
+
+//Is this secure?
+router.post('/usersave', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+    const wat = req.user
+    const pname = req.body.pname
+    const pzize = req.body.psize
+    const remove = req.body.remove
+
+    if(remove){
+        User.func.removeFromUser(wat.username, pname, pzize)
+        res.json({success: true, user: req.user.saved})
+    }else{
+        User.func.saveToUser(wat.username, pname, pzize)
+        res.json({success: true, user: req.user})
+    }
+
+
+});
+
+//this could be moved to /profile
+router.get('/usersaved', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+    res.json({user: req.user.saved});
+});
+
 
 
 

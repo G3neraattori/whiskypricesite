@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { ChartConfiguration, ChartOptions, ChartType } from "chart.js";
 import { AlkodataService } from "../../services/alkodata.service";
 import { BaseChartDirective} from "ng2-charts";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-line-chart',
@@ -11,11 +12,18 @@ import { BaseChartDirective} from "ng2-charts";
 
 
 export class LineChartComponent implements OnInit{
+  //Learned the hard way not to use the String vs string.
+  //won't be fixed (atleast in the near future)
   product!: String;
   pSize!: String;
   ppl!: boolean;
   productlist: string[] = [];
   sizelist: string[] = [];
+  min!: number;
+  minDate!: string;
+  max!: number;
+  maxDate!: string;
+  avg!: number;
 
   //Some black magic that makes the chart updates possible
   @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;
@@ -42,7 +50,8 @@ export class LineChartComponent implements OnInit{
   public lineChartLegend = false;
   public lineChartPlugins = [];
 
-  constructor(private alkodata: AlkodataService) {
+  constructor(private alkodata: AlkodataService,
+              public authService: AuthService) {
   }
 
   ngOnInit() {
@@ -84,11 +93,42 @@ export class LineChartComponent implements OnInit{
       this.lineChartData.datasets[0].label = this.product.toString()
       this.lineChartLegend = true;
       this.chart.update();
+      this.getExtraInfo();
     }, err => {
       console.log(err)
       return false;
     });
     //console.log(this.alkodata.getSizes(this.product.toString(), this.pdata))
+  }
+
+  getExtraInfo(){
+    let arr: any[] = [];
+    //TODO make this take the first value and compare to that
+    this.min = 99999999;
+    this.minDate = '';
+    this.max = -9999999;
+    this.maxDate = '';
+    this.avg = 0;
+    let total = 0;
+
+
+    for(let i=0; i<this.adata.length; i++){
+
+      if(this.min > this.adata[i].products[0].price){
+        this.min = this.adata[i].products[0].price
+        this.minDate = this.adata[i].date
+      }
+
+      if(this.max < this.adata[i].products[0].price){
+        this.max = this.adata[i].products[0].price
+        this.maxDate = this.adata[i].date
+      }
+
+      total += parseFloat(this.adata[i].products[0].price);
+      this.avg = parseFloat((total/(i+1)).toFixed(2));
+    }
+
+    return;
   }
 
   onSizes(){
@@ -100,5 +140,18 @@ export class LineChartComponent implements OnInit{
 
   onProducts(){
     this.product = '';
+  }
+
+  onSave(){
+    console.log(this.product.toString() + this.pSize.toString())
+    this.authService.saveProduct(this.product.toString(), this.pSize.toString()).subscribe(data => {
+      //console.log((data as any).body.success)
+      if((data as any).body.success) {
+        console.log('Data saved successfully')
+        console.log(data)
+      }else {
+        console.log('Data saved unsuccessfully')
+      }
+    });
   }
 }

@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  { path: 'line', component: LineChartComponent },
+  { path: 'search', component: LineChartComponent , canActivate:[AuthGuard]},
 ];
 
 @NgModule({

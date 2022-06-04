@@ -1,0 +1,26 @@
+#div0{
+  margin-left: -50px;
+  float: left;
+}
+#litem{
+  min-width: 60px;
+  margin: 5px;
+  ;
+}
+.rounded-pill{
+  margin-left: 5px;
+}
+#leftbox{
+  background-color: whitesmoke;
+}
+.list-group{
+  max-height: 400px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+}
+#removeButton{
+  padding-left: 20px;
+  float: top;
+
+}

@@ -1,4 +1,10 @@
-<app-navbar></app-navbar>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<body>
+  <div id="page-container">
+    <app-navbar></app-navbar>
+    <div class="container" id="content-wrap">
+      <router-outlet></router-outlet>
+    </div>
+    <footer id="footer"><app-footer></app-footer></footer>
+  </div>
+</body>
+

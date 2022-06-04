@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {map} from "rxjs";
+import {map, pipe} from "rxjs";
+const ngUrl = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AlkodataService {
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
     });
-    return this.http.post('http://localhost:3000/data/products', search, {
+    return this.http.post(ngUrl + '/data/products', search, {
       headers: headers,
       observe: 'response'
     }).pipe(map((res: HttpResponse<Object>) => res));
@@ -25,7 +26,7 @@ export class AlkodataService {
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
     });
-    return this.http.get('http://localhost:3000/data/allproducts', {
+    return this.http.get(ngUrl + '/data/allproducts', {
       headers: headers,
       observe: 'response'
     }).pipe(map((res: HttpResponse<Object>) => res));
