@@ -8,10 +8,10 @@ const mongoose = require('mongoose')
 const cfg = require('./configs/dbconfig')
 const date = new Date();
 
-/*mongoose.connect(cfg.database);
+mongoose.connect(cfg.database);
 mongoose.connection.on('connected', () =>{
     console.log(cfg.database)
-});*/
+});
 
 //TODO do this once a day at set time interval.
 const getFile = async() =>{
@@ -149,7 +149,7 @@ module.exports = {
             products:[History]
 
         })*/
-        for(let i = 0; i < 10; i++){
+        for(let i = 1; i < 10; i++){
             const datedata = new Datedata();
             datedata.date = date.getDate() + i + '.' + date.getMonth() + '.' + date.getFullYear()
             datedata.save()
@@ -196,3 +196,5 @@ module.exports = {
     }
 
 }
+
+module.exports.generateFakeData()
