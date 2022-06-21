@@ -69,13 +69,17 @@ function populateSearchFunction(){
         })
         .exec(function (err, x){
             if (err) throw err;
-            console.log(x[0])
+            //console.log(x[0])
         });
 }
 
 function generateDayData(){
+    console.log('Starting data generation this may take a minute!')
     alkotracker.generateDayData()
+    //COMMENT THIS OUT IF YOU DON'T WANT FAKE DATA
+    alkotracker.generateFakeData()
 }
+
 
 //This adds to the database once every 24h. If server is restarted make sure that you don't duplicate data for day
 //setInterval(generateDayData, 1000 * 60 * 60 * 24)

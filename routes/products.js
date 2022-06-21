@@ -22,7 +22,7 @@ router.post('/products', (req, res, next) => {
         })
         .exec(function (err, data){
             if (err) throw err;
-            console.log(data)
+            //console.log(data)
             res.json({
                 success: true,
                 msg: 'Data found',
@@ -42,7 +42,7 @@ router.get('/allproducts', (req, res, next) => {
         })
         .exec(function (err, data){
             if (err) throw err;
-            console.log(data)
+            //console.log(data)
             res.json({
                 success: true,
                 msg: 'Data found',

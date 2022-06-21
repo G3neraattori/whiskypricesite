@@ -13,7 +13,7 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
     });
-    console.log('newUser: ' + newUser)
+    //console.log('newUser: ' + newUser)
     User.func.addUser(newUser, (err, user) =>{
 
         if(err) {
@@ -31,7 +31,7 @@ router.post('/authenticate', (req, res, next) => {
 
     User.func.getUserByUsername(username, (err, user) =>{
         if(err) throw err;
-        console.log(!user)
+        //console.log(!user)
         if(!user){
             res.json({success: false, msg: 'User not found.'})
             return;
@@ -70,7 +70,7 @@ router.post('/username', (req, res, next) => {
     const email = req.body.email
     User.func.getUserByUsername(username, (err, user) => {
         if (err) throw err;
-        console.log(user)
+        //console.log(user)
         if (user) {
             res.json({success: false, msg: 'Username already taken.'})
             return;
@@ -78,7 +78,7 @@ router.post('/username', (req, res, next) => {
         if(email){
             User.func.getUserByEmail(email, (err, user) => {
                 if (err) throw err;
-                console.log(user)
+                //console.log(user)
                 if (user) {
                     res.json({success: false, msg: 'Email already taken.'})
                     return;
@@ -96,7 +96,7 @@ router.post('/username', (req, res, next) => {
 })
 //TODO NOT THIS
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    console.log(req)
+    //console.log(req)
     res.json({user: req.user});
 });
 
