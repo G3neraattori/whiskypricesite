@@ -22,10 +22,13 @@ const getFile = async() =>{
         res.pipe(file)
         file.on('finish', ()=>{
             file.close()
+            setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
+            console.log('Finished')
         });
     }).on('error', (e) =>{
         console.log(e)
     });
+    return true;
 }
 
 
@@ -81,6 +84,7 @@ function parseXlsxToDB() {
     }
     //datedata.save()
     //console.log(datedata)
+
 }
 //parseXlsxToDB();
 
@@ -97,7 +101,7 @@ function normalSearch(){
     });
 }
 //normalSearch()
-
+/*
 function populateSearchFunction(){
     Datedata.find()
         .populate({
@@ -110,7 +114,7 @@ function populateSearchFunction(){
            console.log(x[0])
         });
 }
-
+*/
 //populateSearchFunction()
 //console.log(mongoose.connection.collections)
 
@@ -170,4 +174,17 @@ function generateFakeData() {
     }
 }
 
-//generateFakeData()
+generateFakeData()
+
+module.exports = {
+    generateDayData: async () => {
+        await getFile().then(function (val){
+            /*if(val){
+                setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
+
+            }*/
+        })
+
+        return true;
+    }
+}

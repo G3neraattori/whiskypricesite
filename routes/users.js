@@ -13,7 +13,7 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
     });
-    console.log(newUser)
+    console.log('newUser: ' + newUser)
     User.func.addUser(newUser, (err, user) =>{
 
         if(err) {
@@ -65,12 +65,40 @@ router.post('/authenticate', (req, res, next) => {
 });
 //passport.authenticate('jwt', {session: false})
 
+router.post('/username', (req, res, next) => {
+    const username = req.body.username
+    const email = req.body.email
+    User.func.getUserByUsername(username, (err, user) => {
+        if (err) throw err;
+        console.log(user)
+        if (user) {
+            res.json({success: false, msg: 'Username already taken.'})
+            return;
+        }
+        if(email){
+            User.func.getUserByEmail(email, (err, user) => {
+                if (err) throw err;
+                console.log(user)
+                if (user) {
+                    res.json({success: false, msg: 'Email already taken.'})
+                    return;
+                }
+            })
+        }
+        res.json({success: true, msg: 'Both available'})
+        return;
+    })
+
+
+
+
+
+})
 //TODO NOT THIS
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     console.log(req)
     res.json({user: req.user});
 });
-
 
 //Is this secure?
 router.post('/usersave', passport.authenticate('jwt', {session: false}), (req, res, next) => {

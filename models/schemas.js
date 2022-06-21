@@ -33,6 +33,11 @@ module.exports.func = {
         User.findOne(query, res)
     },
 
+    getUserByEmail: function (email, res) {
+        const query = {email: email}
+        User.findOne(query, res)
+    },
+
     addUser: function (newUser, cb) {
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -72,6 +77,19 @@ module.exports.func = {
             {username: username},
             {$pull: {saved: save}},
             cb,function(err) { console.log(err) });
+    },
+
+    isTaken(username, email, cb){
+        User.find(
+            {username: username},
+            function(err, name) {
+                if (name.length){
+                    cb('Name exists already',null);
+                }else{
+
+                }
+                console.log(err)
+            });
     }
 };
 

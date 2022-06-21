@@ -11,7 +11,8 @@ const session = require('express-session')
 const cfg = require("./configs/alkodbconfig");
 const History = require("./models/historysubschema");
 const Datedata = require("./models/history");
-
+const {func} = require("./models/schemas");
+const alkotracker = require('./alkotracker')
 
 
 const app = express();
@@ -71,5 +72,13 @@ function populateSearchFunction(){
             console.log(x[0])
         });
 }
+
+function generateDayData(){
+    alkotracker.generateDayData()
+}
+
+//This adds to the database once every 24h. If server is restarted make sure that you don't duplicate data for day
+//setInterval(generateDayData, 1000 * 60 * 60 * 24)
+
 
 //populateSearchFunction()

@@ -11,7 +11,8 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
 
   <!-- Bootstrap core CSS -->
-  <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
 
 
   <style>
@@ -34,12 +35,23 @@
   <link href="" rel="stylesheet">
 </head>
 <body class="text-center">
+
 <form class="form-signin" (submit)="onRegisterSubmit()">
   <!--img class="mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
   <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
+  <div class="alert alert-dismissible alert-danger" role="alert" *ngIf="alreadyUsed">
+    <!--This should work but it isn't-->
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="alreadyUsed=false"></button>
+    <strong>Oops!</strong> <a class="alert-link">The username or email is already registered to an user</a>
+  </div>
+
   <label for="inputUser" class="sr-only">Username</label>
   <input type="text" [(ngModel)]="username" name="usernameField" id="inputUser" class="form-control" placeholder="Username" required="true" autofocus>
   <label for="inputEmail" class="sr-only">Email</label>
+  <div class="alert alert-dismissible alert-danger" *ngIf="emailWrong">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="emailWrong=false; email=''"></button>
+    <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+  </div>
   <input type="email" [(ngModel)]="email" name="passwordField" id="inputEmail" class="form-control" placeholder="Email (optional)">
   <label for="inputPassword" class="sr-only">Password</label>
   <input type="password" [(ngModel)]="password" name="passwordField" id="inputPassword" class="form-control" placeholder="Password" required="true">
@@ -49,7 +61,6 @@
     </label>
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
 </form>
 </body>
 </html>
