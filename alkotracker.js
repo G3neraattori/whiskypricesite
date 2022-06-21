@@ -24,11 +24,12 @@ const getFile = async() =>{
             file.close()
             setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
             console.log('Finished')
+            return true;
         });
     }).on('error', (e) =>{
         console.log(e)
     });
-    return true;
+    return false;
 }
 
 
@@ -129,15 +130,17 @@ module.exports = {
                 setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
 
             }*/
+            return true;
         })
+        return false;
 
-        return true;
     },
 
     //this will create you random data. The dates might be wrong though cause unlike the real data collection, this doesn't
     //take any actual day data but just the day it was used on (as int) + 1
     //Also doesn't change the price per liter realistically
     generateFakeData() {
+
         console.log("GENERATING FAKE DATA. THIS WILL TAKE A WHILE!!!!")
         const file = xlsx.readFile('./temp/data.xlsx');
         const worksheet = file.Sheets[file.SheetNames[0]];
@@ -189,6 +192,7 @@ module.exports = {
                 }
             }
         }
+
     }
 
 }

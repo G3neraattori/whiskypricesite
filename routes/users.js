@@ -28,6 +28,7 @@ router.post('/register', (req, res, next) => {
 router.post('/authenticate', (req, res, next) => {
     const username = req.body.username
     const password = req.body.password
+    console.log('WE ARE 2 HERE')
 
     User.func.getUserByUsername(username, (err, user) =>{
         if(err) throw err;
@@ -66,6 +67,7 @@ router.post('/authenticate', (req, res, next) => {
 //passport.authenticate('jwt', {session: false})
 
 router.post('/username', (req, res, next) => {
+    console.log('WE ARE HERE')
     const username = req.body.username
     const email = req.body.email
     User.func.getUserByUsername(username, (err, user) => {
@@ -86,7 +88,6 @@ router.post('/username', (req, res, next) => {
             })
         }
         res.json({success: true, msg: 'Both available'})
-        return;
     })
 
 

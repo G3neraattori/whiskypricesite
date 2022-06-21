@@ -26,25 +26,16 @@ export class ValidateService {
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
     });
-    let success = null;
+    //let success = null;
     let details = {
       username: user.username,
       password: user.email,
     }
 
-    this.http.post(ngUrl + '/users/username', details,{
+    return this.http.post(ngUrl + '/users/username', details,{
       headers: headers,
       observe: 'response'
-    }).pipe(map((res: HttpResponse<Object>) => {
-      if((res as any).body.success){
-        success = true
-      }else{
-        success = false
-      }
-      //console.log('asfnkalskfjlk' + res)
-    }))
-    return success;
-
+    }).pipe(map((res: HttpResponse<Object>) => res))
 
   }
 }
