@@ -60,6 +60,27 @@ app.listen (port, () =>{
     console.log('Server started on ' + port)
 });
 
+function generateDayData(){
+    console.log('Starting data generation this may take a minute!')
+    alkotracker.generateDayData().then(function (val){
+        console.log('Daydata DONE')
+    })
+
+}
+
+//COMMENT THIS OUT IF YOU DON'T WANT FAKE DATA
+alkotracker.generateFakeData()
+
+
+
+//This adds to the database once every 24h. If server is restarted make sure that you don't duplicate data for day
+/*generateDayData()
+setInterval(generateDayData(), 1000 * 60 * 60 * 24)
+*/
+
+
+//Testing function leftover code
+/*
 function populateSearchFunction(){
     Datedata.find()
         .populate({
@@ -72,23 +93,4 @@ function populateSearchFunction(){
             //console.log(x[0])
         });
 }
-
-function generateDayData(){
-    console.log('Starting data generation this may take a minute!')
-    alkotracker.generateDayData().then(function (val){
-
-        alkotracker.generateFakeData()
-        console.log('DONE')
-
-
-    })
-    //COMMENT THIS OUT IF YOU DON'T WANT FAKE DATA
-
-}
-
-//setTimeout(generateDayData, 5000)
-//This adds to the database once every 24h. If server is restarted make sure that you don't duplicate data for day
-//setInterval(generateDayData, 1000 * 60 * 60 * 24)
-
-
-//populateSearchFunction()
+ */

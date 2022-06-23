@@ -18,18 +18,21 @@ const getFile = async() =>{
     const url = "https://www.alko.fi/INTERSHOP/static/WFS/Alko-OnlineShop-Site/-/Alko-OnlineShop/fi_FI/Alkon%20Hinnasto%20Tekstitiedostona/alkon-hinnasto-tekstitiedostona.xlsx";
     const file = fs.createWriteStream('./temp/data.xlsx')
     //TODO maybe make this not insecure...
+    return new Promise((resolve, reject) =>{
     const request = https.get(url, {insecureHTTPParser: true}, function (res){
         res.pipe(file)
         file.on('finish', ()=>{
             file.close()
-            setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
+            //parseXlsxToDB()
+            //setTimeout(() => {parseXlsxToDB(); console.log('done')});
             console.log('Finished')
-            return true;
+            resolve(true)
         });
     }).on('error', (e) =>{
         console.log(e)
+        reject(e)
     });
-    return false;
+    })
 }
 
 
@@ -90,6 +93,7 @@ function parseXlsxToDB() {
 //parseXlsxToDB();
 
 //unused
+/*
 function normalSearch(){
 
     const test1 = Datedata.find({productName: "Jameson"})
@@ -120,9 +124,6 @@ function populateSearchFunction(){
 //console.log(mongoose.connection.collections)
 
 
-
-//generateFakeData()
-
 module.exports = {
     generateDayData: async () => {
         await getFile().then(function (val){
@@ -130,6 +131,7 @@ module.exports = {
                 setTimeout(() => {parseXlsxToDB(); console.log('done')}, 5000);
 
             }*/
+            parseXlsxToDB();
             return true;
         })
         return false;
@@ -139,62 +141,63 @@ module.exports = {
     //this will create you random data. The dates might be wrong though cause unlike the real data collection, this doesn't
     //take any actual day data but just the day it was used on (as int) + 1
     //Also doesn't change the price per liter realistically
-    generateFakeData() {
+    async generateFakeData() {
+        await getFile().then(function (val) {
 
-        console.log("GENERATING FAKE DATA. THIS WILL TAKE A WHILE!!!!")
-        const file = xlsx.readFile('./temp/data.xlsx');
-        const worksheet = file.Sheets[file.SheetNames[0]];
-        /*let datedata = new Datedata({
-            date: date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear(),
-            products:[History]
+            console.log("GENERATING FAKE DATA. THIS WILL TAKE A WHILE!!!!")
+            const file = xlsx.readFile('./temp/data.xlsx');
+            const worksheet = file.Sheets[file.SheetNames[0]];
+            /*let datedata = new Datedata({
+                date: date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear(),
+                products:[History]
 
-        })*/
-        for(let i = 1; i < 10; i++){
-            const datedata = new Datedata();
-            datedata.date = date.getDate() + i + '.' + date.getMonth() + '.' + date.getFullYear()
-            datedata.save()
-                .then((result) => {
-                    console.log("generation round ok")
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            })*/
+            for (let i = 1; i < 10; i++) {
+                const datedata = new Datedata();
+                datedata.date = date.getDate() + i + '.' + date.getMonth() + '.' + date.getFullYear()
+                datedata.save()
+                    .then((result) => {
+                        console.log("generation round ok")
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
-            for (let z in worksheet) {
-                if(z.toString()[0] === 'I' && worksheet[z].v.toString() === ('viskit')){
-                    let productTypeS = worksheet[z].v
-                    z = z.substring(1);
-                    /*let history = new History({
-                        productName: worksheet['B' + z].v,
-                        price: worksheet['E' + z].v,
-                        pricePerLiter: worksheet['F' + z].v,
-                        productType: productTypeS
+                for (let z in worksheet) {
+                    if (z.toString()[0] === 'I' && worksheet[z].v.toString() === ('viskit')) {
+                        let productTypeS = worksheet[z].v
+                        z = z.substring(1);
+                        /*let history = new History({
+                            productName: worksheet['B' + z].v,
+                            price: worksheet['E' + z].v,
+                            pricePerLiter: worksheet['F' + z].v,
+                            productType: productTypeS
 
-                    })*/
-                    const history = new History();
-                    history.productName = worksheet['B' + z].v
-                    history.bottleSize = worksheet['D' + z].v
-                    history.price = (parseFloat(worksheet['E' + z].v) + Math.floor(Math.random() * 10)).toString()
-                    history.pricePerLiter = worksheet['F' + z].v
-                    history.productType = productTypeS
-                    history.save()
-                        .then((result) => {
-                            Datedata.findOne({ date: date.getDate() + i + '.' + date.getMonth() + '.' + date.getFullYear() }, (err, datedata) => {
-                                if (datedata) {
-                                    datedata.products.push(history);
-                                    datedata.save();
-                                }
+                        })*/
+                        const history = new History();
+                        history.productName = worksheet['B' + z].v
+                        history.bottleSize = worksheet['D' + z].v
+                        history.price = (parseFloat(worksheet['E' + z].v) + Math.floor(Math.random() * 10)).toString()
+                        history.pricePerLiter = worksheet['F' + z].v
+                        history.productType = productTypeS
+                        history.save()
+                            .then((result) => {
+                                Datedata.findOne({date: date.getDate() + i + '.' + date.getMonth() + '.' + date.getFullYear()}, (err, datedata) => {
+                                    if (datedata) {
+                                        datedata.products.push(history);
+                                        datedata.save();
+                                    }
+                                });
+                            })
+                            .catch((error) => {
+                                console.log(error)
                             });
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        });
+                    }
                 }
             }
-        }
-
+        })
     }
 
 }
-
-module.exports.generateFakeData()
+//COMMENT THIS OUT IF YOU DON'T WANT FAKE DATA
+//module.exports.generateFakeData()
